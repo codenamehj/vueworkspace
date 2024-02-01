@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-bind:key="idx" v-for="(product, idx) in productList">
+        <tr v-bind:key="idx" v-for="(product, idx) in productList" v-show="product.price > 30000">
           <td>{{ idx + 1 }}</td>
           <td>{{ product.product_name }}</td>
           <td>{{ Number(product.price).toLocaleString() + " 원" }}</td>
@@ -34,7 +34,7 @@
 export default {
   data() {
     return {
-      score: 80,
+      score: 90,
       productList: [
         { "product_name": "기계식키보드", "price": 25000, "category": "노트북/태블릿", "delivery_price": 5000 },
         { "product_name": "무선마우스", "price": 12000, "category": "노트북/태블릿", "delivery_price": 5000 },
@@ -44,6 +44,9 @@ export default {
       ]
     };
   },
+  methods: {
+
+  }
 }
 </script>
 

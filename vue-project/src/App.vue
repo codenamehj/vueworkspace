@@ -3,7 +3,10 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/binding">데이터바인딩</router-link> |
-    <router-link to="/bindingList">데이터바인딩리스트</router-link>
+    <router-link to="/bindingList">데이터바인딩리스트</router-link> |
+    <router-link to="/eventClick">이벤트</router-link> |
+    <router-link to="/eventTodo">이벤트Todo</router-link> |
+    <router-link to="/computed">Computed</router-link>
   </nav>
   <router-view/>
 </template>
