@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="text" v-model="todo">
+    <input type="text" v-model="todo" @keyup.enter="addTodo">
     <button @click="addTodo">추가</button>
   </div>
   <div>
