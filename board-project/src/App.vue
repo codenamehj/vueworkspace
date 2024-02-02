@@ -2,10 +2,27 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/board">게시판</router-link> |
+    <router-link to="/todo">Todo</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
   <router-view />
 </template>
+
+<script>
+export default {
+  // data() {
+  //   return {
+  //     rootData: 'hello'
+  //   }
+  // },
+  provide() { // 손자들에게도 값을 줄 수 있음 but 읽기 전용 수정 불가
+    return {
+      rootList: 'Hello, Hello',
+      rootStr: 'World'
+    }
+  }
+}
+</script>
 
 <style>
 @import url("../src/assets/style.css");

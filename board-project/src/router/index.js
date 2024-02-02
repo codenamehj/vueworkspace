@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import BoardView from '../views/BoardView.vue'
+import TodoView from '../views/TodoView.vue'
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/board',
     name: 'board',
     component: BoardView
+  },
+  {
+    path: '/todo',
+    name: 'todo',
+    component: TodoView
   },
   {
     path: '/about',
