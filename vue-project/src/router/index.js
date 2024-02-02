@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import DataBinding from "../views/DataBinding4.vue";
+import DataBinding from "../views/DataBinding.vue";
+import DataBinding2 from "../views/DataBinding2.vue";
+import DataBinding3 from "../views/DataBinding3.vue";
+import DataBinding4 from "../views/DataBinding4.vue";
 import DataBindingList from "../views/DataBindingList.vue";
 import EventClick from "../views/EventClick.vue";
 import EventTodo from "../views/EventTodo.vue";
@@ -25,6 +28,21 @@ const routes = [
     path: "/binding",
     name: "binding",
     component: DataBinding
+  },
+  {
+    path: "/binding2",
+    name: "binding2",
+    component: DataBinding2
+  },
+  {
+    path: "/binding3",
+    name: "binding3",
+    component: DataBinding3
+  },
+  {
+    path: "/binding4",
+    name: "binding4",
+    component: DataBinding4
   },
   {
     path: "/bindingList",
