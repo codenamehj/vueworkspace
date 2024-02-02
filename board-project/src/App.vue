@@ -4,10 +4,12 @@
     <router-link to="/board">게시판</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
-  <router-view/>
+  <router-view />
 </template>
 
 <style>
+@import url("../src/assets/style.css");
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -26,6 +28,6 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #92AD65;
 }
 </style>
