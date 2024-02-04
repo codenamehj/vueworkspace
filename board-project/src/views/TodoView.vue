@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeadComponent @add-todo="addTodo" />
-    <BodyComponent v-bind:todoList="todoList" @todo-delete="deleteTodo" @todo-checked="TodoChecked" />
+    <BodyComponent v-bind:todoList="todoList" @todo-delete="deleteTodo" @cancel-todo="cancelTodo" />
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       todoList: [
-        { no: 1, todo: 'Hit the gym', cancelFlag: true },
+        { no: 1, todo: 'Hit the gym', cancelFlag: false },
         { no: 2, todo: 'Pay bills', cancelFlag: true },
         { no: 3, todo: 'Meet George', cancelFlag: false },
         { no: 4, todo: 'Buy eggs', cancelFlag: false },
@@ -36,8 +36,13 @@ export default {
     deleteTodo(no) {
       this.todoList = this.todoList.filter(todo => todo.no == no ? false : true);
     },
-    TodoChecked(no) {
-      console.log(no);
+    cancelTodo(no) {
+      for (let i = 0; i < this.todoList.length; i++) {
+        if (this.todoList[i].no == no) {
+          this.todoList[i].cancelFlag = !this.todoList[i].cancelFlag;
+          break;
+        }
+      }
     }
   }
 }

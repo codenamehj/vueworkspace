@@ -1,7 +1,7 @@
 <template>
   <div id="myDIV" class="header">
     <h2 style="margin:5px">My To Do List</h2>
-    <input type="text" id="myInput" placeholder="Title..." v-model="todo">
+    <input type="text" id="myInput" placeholder="Title..." v-model="todo" @keyup.enter="todoSave">
     <button v-on:click="todoSave" class="addBtn">Add</button>
   </div>
 </template>
@@ -16,6 +16,7 @@ export default {
   methods: {
     todoSave() {
       this.$emit('add-todo', this.todo);
+      this.todo = '';
     }
   }
 }
