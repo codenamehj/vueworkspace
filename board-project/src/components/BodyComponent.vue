@@ -1,6 +1,6 @@
 <template>
   <ul id="myUL">
-    <li v-for="todo in  todoList " v-bind:key="todo.no" @click="cancelTodo(todo.no)" :class="{ checked: todo.cancelFlag }">
+    <li v-for="todo in  todoList " v-bind:key="todo.no" @click="cancelTodo(todo.no)" :class="{ checked: todo.cancelFlag }" >
       {{ todo.todo }}<span class="close" @click="deleteTodo(todo.no)">x</span></li>
   </ul>
 </template>
