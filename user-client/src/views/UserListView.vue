@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-bind:key="user.user_no" v-for="user in userList">
+        <tr v-bind:key="user.user_no" v-for="user in userList" @click="goToUserInfo(user.user_id)">
           <td>{{ user.user_no }}</td>
           <td>{{ user.user_id }}</td>
           <td v-text="user.user_name" />
@@ -28,6 +28,7 @@
 
 <script>
 import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -39,11 +40,13 @@ export default {
       return this.userList.length;
     }
   },
-  watch: { // 프로세스
-    userList() {
-      console.log('데이터가 변경되었습니다.');
-    }
-  },
+  // watch: { // 프로세스
+  //   userList(newQuestion, oldQuestion) {
+  //     console.log('이전: ', oldQuestion);
+  //     alert('데이터가 변경되었습니다.');
+  //     console.log('이후: ', newQuestion);
+  //   }
+  // },
   created() {
     this.getUserList() // 비동기 작업
   },
@@ -53,8 +56,12 @@ export default {
       let list = result.data;
       this.userList = list;
     },
-    getDate(edate) {
-      let eDate = new Date(edate);
+    goToUserInfo(userId) {
+      this.$router.push({ path: '/userInfo', query: { "userId": userId } });
+      // this.$router.push({ name: 'userInfo', query: { "userId": userId } });
+    },
+    getDate(date) {
+      let eDate = new Date(date);
 
       let year = eDate.getFullYear();
       let month = ('0' + (eDate.getMonth() + 1)).slice(-2);
