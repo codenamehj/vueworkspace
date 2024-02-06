@@ -79,6 +79,7 @@ export default {
       axios
         .put('/api/users/' + this.userInfo.user_id, data)
         .then(result => {
+          console.log(result.data);
           if (result.data.changedRows == 0) {
             alert(`수정되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`);
           } else {
