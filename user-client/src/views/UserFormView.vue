@@ -43,9 +43,9 @@
     </div>
     <div class="d-grid gap-2 col-6 mx-auto">
       <!-- 첫번째 -->
-      <button type="button" class="btn btn-outline-dark" @click="saveInfo(searchNo)">저장</button>
+      <!-- <button type="button" class="btn btn-outline-dark" @click="saveInfo(searchNo)">저장</button> -->
       <!-- 두번째 => jsp 에서는 잘 쓰이지 않음 -->
-      <!-- <button type="button" class="btn btn-outline-dark" @click="isUpdated ? updateInfo() : insertInfo()">저장</button>  -->
+      <button type="button" class="btn btn-outline-dark" @click="isUpdated ? updateInfo() : insertInfo()">저장</button> 
     </div>
   </div>
 </template>
@@ -103,54 +103,134 @@ export default {
 
       return year + '-' + month + '-' + day;
     },
-    saveInfo(id) { // 첫번째
-      // 1) 보낼 데이터 산출
-      let info = this.getSendInfo(id);
+    // saveInfo(id) { // 첫번째
+    //   // 1) 보낼 데이터 산출
+    //   let info = this.getSendInfo(id);
 
-      // 2) ajax
-      axios(info)
+    //   // 2) ajax
+    //   axios(info)
+    //     .then(result => {
+    //       let count = result.data.affectedRows;
+    //       if (count == 0) {
+    //         alert('저장되지 않았습니다. 내용을 확인해 주세요.');
+    //       } else {
+    //         alert('저장되었습니다.');
+    //         if (result.data.insertId > 0) { // 등록일 경우 추가 작업
+    //           this.userInfo.user_no = result.data.insertId;
+    //         }
+    //       }
+    //     })
+    //     .catch(err => console.log(err));
+    // },
+    // getSendInfo(id) {
+    //   // method, url, data
+    //   let method = '';
+    //   let url = '';
+    //   let data = null;
+
+    //   if (id == null || id == undefined) { // 등록
+    //     method = 'post';
+    //     url = `/api/users`;
+    //     data = {
+    //       "param": {
+    //         user_id: this.userInfo.user_id,
+    //         user_pwd: this.userInfo.user_pwd,
+    //         user_name: this.userInfo.user_name,
+    //         user_gender: this.userInfo.user_gender,
+    //         user_age: this.userInfo.user_age,
+    //         join_date: this.userInfo.join_date
+    //       }
+    //     };
+    //   } else { // 수정
+    //     method = 'put';
+    //     url = `/api/users/${id}`;
+    //     data = {
+    //       "param": {
+    //         user_pwd: this.userInfo.user_pwd,
+    //         user_name: this.userInfo.user_name,
+    //         user_gender: this.userInfo.user_gender,
+    //         user_age: this.userInfo.user_age,
+    //         join_date: this.userInfo.join_date
+    //       }
+    //     };
+    //   }
+    //   return {
+    //     method,
+    //     url,
+    //     data
+    //   }
+    // },
+    insertInfo() { // 두번째
+      if (!this.validation()) return;
+
+      let data = {
+        "param": {
+          user_id: this.userInfo.user_id,
+          user_pwd: this.userInfo.user_pwd,
+          user_name: this.userInfo.user_name,
+          user_gender: this.userInfo.user_gender,
+          user_age: this.userInfo.user_age,
+          join_date: this.userInfo.join_date
+        }
+      }
+
+      axios
+        .post('/api/users', data)
         .then(result => {
-          console.log(result);
+          let user_no = result.data.insertId;
+          if (user_no == 0) {
+            alert(`등록되지 않았습니다.\n내용을 확인해주세요`)
+          } else {
+            alert(`정상적으로 등록되었습니다.`);
+            this.userInfo.user_no = user_no;
+          }
         })
         .catch(err => console.log(err));
-    },
-    getSendInfo(id) {
-      // method, url, data
-      let method = '';
-      let url = '';
-      let data = null;
 
-      if (id == null || id == undefined) { // 등록
-        method = 'post';
-        url = `/api/users`;
-        data = {
-          "param": {
-            user_id: this.userInfo.user_id,
-            user_pwd: this.userInfo.user_pwd,
-            user_name: this.userInfo.user_name,
-            user_gender: this.userInfo.user_gender,
-            user_age: this.userInfo.user_age,
-            join_date: this.userInfo.join_date
+    },
+    updateInfo() {
+      if (!this.validation()) return;
+
+      let data = {
+        "param": {
+          user_pwd: this.userInfo.user_pwd,
+          user_name: this.userInfo.user_name,
+          user_gender: this.userInfo.user_gender,
+          user_age: this.userInfo.user_age,
+          join_date: this.userInfo.join_date
+        }
+      };
+
+      axios
+        .put(`/api/users/${this.userInfo.user_id}`, data)
+        .then(result => {
+          let count = result.data.changedRows;
+          if (count == 0) {
+            alert(`수정되지 않았습니다.\n내용를 확인해주세요`)
+          } else {
+            alert(`정상적으로 수정되었습니다.`);
           }
-        };
-      } else { // 수정
-        method = 'put';
-        url = `/api/users/${id}`;
-        data = {
-          "param": {
-            user_pwd: this.userInfo.user_pwd,
-            user_name: this.userInfo.user_name,
-            user_gender: this.userInfo.user_gender,
-            user_age: this.userInfo.user_age,
-            join_date: this.userInfo.join_date
-          }
-        };
+        })
+        .catch(err => console.log(err));
+
+    },
+    validation() {
+      if (this.userInfo.user_id == "" && !this.isUpdated) {
+        alert('아이디가 입력되지 않았습니다.');
+        return false;
       }
-      return {
-        method,
-        url,
-        data
+
+      if (this.userInfo.user_pwd == "") {
+        alert('비밀번호가 입력되지 않았습니다.');
+        return false;
       }
+
+      if (this.userInfo.user_name == "") {
+        alert('이름이 입력되지 않았습니다.');
+        return false;
+      }
+
+      return true;
     }
   }
 }
