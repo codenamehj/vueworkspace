@@ -3,40 +3,42 @@
     <h1>회원 정보 조회</h1>
     <div class="row">
       <table class="table">
-        <tr>
-          <th>번호</th>
-          <td>{{ userInfo.user_no }}</td>
-        </tr>
-        <tr>
-          <th>아이디</th>
-          <td>{{ userInfo.user_id }}</td>
-        </tr>
-        <tr>
-          <th>비밀번호</th>
-          <td>{{ userInfo.user_pwd }}</td>
-        </tr>
-        <tr>
-          <th>이름</th>
-          <td>{{ userInfo.user_name }}</td>
-        </tr>
-        <tr>
-          <th>성별</th>
-          <td>{{ userGender }}</td>
-        </tr>
-        <tr>
-          <th>나이</th>
-          <td>{{ userInfo.user_age }}</td>
-        </tr>
-        <tr>
-          <th>가입일자</th>
-          <td>{{ joinDate }}</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>번호</th>
+            <td>{{ userInfo.user_no }}</td>
+          </tr>
+          <tr>
+            <th>아이디</th>
+            <td>{{ userInfo.user_id }}</td>
+          </tr>
+          <tr>
+            <th>비밀번호</th>
+            <td>{{ userInfo.user_pwd }}</td>
+          </tr>
+          <tr>
+            <th>이름</th>
+            <td>{{ userInfo.user_name }}</td>
+          </tr>
+          <tr>
+            <th>성별</th>
+            <td>{{ userGender }}</td>
+          </tr>
+          <tr>
+            <th>나이</th>
+            <td>{{ userInfo.user_age }}</td>
+          </tr>
+          <tr>
+            <th>가입일자</th>
+            <td>{{ joinDate }}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <div class="row">
-      <button class="btn btn-dark col-4" @click="goToUpdate(userInfo.user_id)">수정</button>
-      <router-link to="/" class="btn btn-dark col-4">목록</router-link>
-      <button class="btn btn-dark col-4" @click="deleteInfo(userInfo.user_id)">삭제</button>
+      <button class="btn btn-outline-dark col-4" @click="goToUpdate(userInfo.user_id)">수정</button>
+      <router-link to="/" class="btn btn-outline-dark col-4">목록</router-link>
+      <button class="btn btn-outline-dark col-4" @click="deleteInfo(userInfo.user_id)">삭제</button>
     </div>
   </div>
 </template>
@@ -91,7 +93,7 @@ export default {
     goToUpdate(userId) {
       // 수정폼 컴포넌트 호출
       console.log(userId);
-      this.$router.push({ path: '/userUpdate', query: { "userId": userId } });
+      this.$router.push({ path: '/userForm', query: { "userId": userId } });
     },
     deleteInfo(userId) {
       // 서버에 해당 데이터를 삭제
@@ -104,10 +106,8 @@ export default {
           } else {
             alert(`삭제되지 않았습니다.\n메세지를 확인해주세요\n${result.data.message}`)
           }
-
         })
         .catch(err => console.log(err));
-
     }
   }
 }

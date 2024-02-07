@@ -3,41 +3,43 @@
     <h1>회원 정보 수정</h1>
     <div class="row">
       <table class="table">
-        <tr>
-          <th>번호</th>
-          <td>{{ userInfo.user_no }}</td>
-        </tr>
-        <tr>
-          <th>아이디</th>
-          <td>{{ userInfo.user_id }}</td>
-        </tr>
-        <tr>
-          <th>비밀번호</th>
-          <td><input class="form-control" type="password" v-model="userInfo.user_pwd"></td>
-        </tr>
-        <tr>
-          <th>이름</th>
-          <td><input class="form-control" type="text" v-model="userInfo.user_name"></td>
-        </tr>
-        <tr>
-          <th>성별</th>
-          <td>
-            <input type="radio" value="M" v-model="userInfo.user_gender">남자
-            <input type="radio" value="F" v-model="userInfo.user_gender">여자
-          </td>
-        </tr>
-        <tr>
-          <th>나이</th>
-          <td><input class="form-control" type="number" v-model="userInfo.user_age"></td>
-        </tr>
-        <tr>
-          <th>가입일자</th>
-          <td><input class="form-control" type="date" v-model="userInfo.join_date"></td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>번호</th>
+            <td>{{ userInfo.user_no }}</td>
+          </tr>
+          <tr>
+            <th>아이디</th>
+            <td>{{ userInfo.user_id }}</td>
+          </tr>
+          <tr>
+            <th>비밀번호</th>
+            <td><input class="form-control" type="password" v-model="userInfo.user_pwd"></td>
+          </tr>
+          <tr>
+            <th>이름</th>
+            <td><input class="form-control" type="text" v-model="userInfo.user_name"></td>
+          </tr>
+          <tr>
+            <th>성별</th>
+            <td>
+              <input type="radio" value="M" v-model="userInfo.user_gender">남자
+              <input type="radio" value="F" v-model="userInfo.user_gender">여자
+            </td>
+          </tr>
+          <tr>
+            <th>나이</th>
+            <td><input class="form-control" type="number" v-model="userInfo.user_age"></td>
+          </tr>
+          <tr>
+            <th>가입일자</th>
+            <td><input class="form-control" type="date" v-model="userInfo.join_date"></td>
+          </tr>
+        </tbody>
       </table>
     </div>
-    <div class="row">
-      <button class="btn btn-dark col-4" @click="updateInfo()">저장</button>
+    <div class="d-grid gap-2 col-6 mx-auto">
+      <button type="button" class="btn btn-outline-dark" @click="updateInfo()">저장</button>
     </div>
   </div>
 </template>
@@ -65,11 +67,25 @@ export default {
   },
   methods: {
     async getUserInfo(userId) {
-      // http://localhost:3000/users/user01
-      // 1) '/api/users/' + userId
-      // 2) `/api/users/${userId}`
       let result = await axios.get('/api/users/' + userId).catch(err => console.log(err));
-      this.userInfo = result.data;
+      let info = result.data;
+
+      let newDate = this.dateFormat(info.join_date);
+      info.join_date = newDate;
+
+      this.userInfo = info;
+    },
+    dateFormat(value) {
+      let result = null;
+      if (value != null) {
+        let date = new Date(value);
+        let year = date.getFullYear();
+        let month = ('0' + (date.getMonth() + 1)).slice(-2);
+        let day = ('0' + date.getDate()).slice(-2);
+
+        result = year + '-' + month + '-' + day;
+      }
+      return result;
     },
     updateInfo() {
       if (!this.validation()) return;
@@ -79,12 +95,11 @@ export default {
       axios
         .put('/api/users/' + this.userInfo.user_id, data)
         .then(result => {
-          console.log(result.data);
           if (result.data.changedRows == 0) {
             alert(`수정되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`);
           } else {
             alert(`정상적으로 수정되었습니다.`);
-            this.$router.push({ path: '/' });
+            this.$router.push({ path: '/userInfo', query: { "userId": this.userInfo.user_id } });
           }
         })
         .catch(err => console.log(err));

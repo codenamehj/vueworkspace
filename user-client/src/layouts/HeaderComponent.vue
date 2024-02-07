@@ -7,7 +7,7 @@
             <router-link class="nav-link" to="/userInsert">등록</router-link>
         </li>
         <li class="nav-item">
-            <router-link class="nav-link" to="/">Link</router-link>
+            <router-link class="nav-link" to="/userForm">Form</router-link>
         </li>
     </ul>
 </template>

@@ -4,41 +4,43 @@
     <h1>회원 정보 등록</h1>
     <div class="row">
       <table class="table">
-        <tr>
-          <th>번호</th>
-          <td><input class="form-control" type="number" v-model="userInfo.user_no" readonly></td>
-        </tr>
-        <tr>
-          <th>아이디</th>
-          <td><input class="form-control" type="text" v-model="userInfo.user_id"></td>
-        </tr>
-        <tr>
-          <th>비밀번호</th>
-          <td><input class="form-control" type="password" v-model="userInfo.user_pwd"></td>
-        </tr>
-        <tr>
-          <th>이름</th>
-          <td><input class="form-control" type="text" v-model="userInfo.user_name"></td>
-        </tr>
-        <tr>
-          <th>성별</th>
-          <td>
-            <input type="radio" value="M" v-model="userInfo.user_gender">남자
-            <input type="radio" value="F" v-model="userInfo.user_gender">여자
-          </td>
-        </tr>
-        <tr>
-          <th>나이</th>
-          <td><input class="form-control" type="number" v-model="userInfo.user_age" min="0" max="150"></td>
-        </tr>
-        <tr>
-          <th>가입일자</th>
-          <td><input class="form-control" type="date" v-model="userInfo.join_date"></td> <!-- yyyy-MM-dd -->
-        </tr>
+        <tbody>
+          <tr>
+            <th>번호</th>
+            <td><input class="form-control" type="number" v-model="userInfo.user_no" readonly></td>
+          </tr>
+          <tr>
+            <th>아이디</th>
+            <td><input class="form-control" type="text" v-model="userInfo.user_id"></td>
+          </tr>
+          <tr>
+            <th>비밀번호</th>
+            <td><input class="form-control" type="password" v-model="userInfo.user_pwd"></td>
+          </tr>
+          <tr>
+            <th>이름</th>
+            <td><input class="form-control" type="text" v-model="userInfo.user_name"></td>
+          </tr>
+          <tr>
+            <th>성별</th>
+            <td>
+              <input type="radio" value="M" v-model="userInfo.user_gender">남자
+              <input type="radio" value="F" v-model="userInfo.user_gender">여자
+            </td>
+          </tr>
+          <tr>
+            <th>나이</th>
+            <td><input class="form-control" type="number" v-model="userInfo.user_age" min="0" max="150"></td>
+          </tr>
+          <tr>
+            <th>가입일자</th>
+            <td><input class="form-control" type="date" v-model="userInfo.join_date"></td> <!-- yyyy-MM-dd -->
+          </tr>
+        </tbody>
       </table>
     </div>
-    <div class="row">
-      <button class="btn btn-dark" @click="insertInfo()">저장</button>
+    <div class="d-grid gap-2 col-6 mx-auto">
+      <button type="button" class="btn btn-outline-dark" @click="insertInfo()">저장</button>
     </div>
   </div>
 </template>
@@ -60,7 +62,18 @@ export default {
       }
     }
   },
+  created() {
+    this.userInfo.join_date = this.getToday();
+  },
   methods: {
+    getToday() {
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = ('0' + (date.getMonth() + 1)).slice(-2);
+      let day = ('0' + date.getDate()).slice(-2);
+
+      return year + '-' + month + '-' + day;
+    },
     insertInfo() {
       // 1) 유효성 체크
       if (!this.validation()) return;

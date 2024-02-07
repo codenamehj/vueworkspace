@@ -19,7 +19,7 @@
           <td>{{ user.user_id }}</td>
           <td v-text="user.user_name" />
           <td v-text="user.user_gender" />
-          <td>{{ getDate(user.join_date) }}</td>
+          <td>{{ joinDate(user.join_date) }}</td>
         </tr>
       </tbody>
     </table>
@@ -58,17 +58,19 @@ export default {
     },
     goToUserInfo(userId) {
       this.$router.push({ path: '/userInfo', query: { "userId": userId } });
-      // this.$router.push({ name: 'userInfo', query: { "userId": userId } });
+      // this.$router.push({ name: 'userInfo', query: { userId } });
     },
-    getDate(date) {
-      let eDate = new Date(date);
+    joinDate(jDate) {
+      let result = null;
+      if (jDate != null) {
+        let date = new Date(jDate);
 
-      let year = eDate.getFullYear();
-      let month = ('0' + (eDate.getMonth() + 1)).slice(-2);
-      let day = ('0' + (eDate.getDate())).slice(-2);
+        let year = date.getFullYear();
+        let month = ('0' + (date.getMonth() + 1)).slice(-2);
+        let day = ('0' + date.getDate()).slice(-2);
 
-      let result = year + '.' + month + '.' + day;
-
+        result = year + '년 ' + month + '월 ' + day + '일';
+      }
       return result;
     }
   }
